@@ -1,7 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.interpolate import CubicSpline
 import os
+import numpy as np
 
 from caso_original import gerar_interpolacoes
 
