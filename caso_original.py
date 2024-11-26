@@ -22,6 +22,7 @@ def lagrange_interpolation(x, y, x_value):
     return result
 
 # Função para gerar gráficos e calcular valores de interpolação para diferentes casos
+# Função para gerar gráficos e calcular valores de interpolação para diferentes casos
 def gerar_interpolacoes(dados, x_value, caso_nome):
     # Interpolação Lagrangeana
     y_value_lagrange = lagrange_interpolation(dados["x"], dados["y"], x_value)
@@ -44,6 +45,10 @@ def gerar_interpolacoes(dados, x_value, caso_nome):
     y_plot_lagrange = [lagrange_interpolation(dados["x"], dados["y"], xi) for xi in x_plot]
     y_plot_spline = spline(x_plot)
 
+    # Determinar os limites dos eixos x e y
+    x_min, x_max = min(dados["x"]), max(dados["x"])
+    y_min, y_max = min(min(y_plot_lagrange), min(y_plot_spline), min(dados["y"])), max(max(y_plot_lagrange), max(y_plot_spline), max(dados["y"]))
+
     # Gráfico da interpolação Lagrangeana
     plt.figure(figsize=(10, 6))
     plt.plot(dados["x"], dados["y"], 'o', label="Pontos Dados", color='black')
@@ -54,9 +59,11 @@ def gerar_interpolacoes(dados, x_value, caso_nome):
     plt.xlabel("x (km)")
     plt.ylabel("y (km)")
     plt.title(f"Interpolação Lagrangeana - {caso_nome}")
+    plt.xlim(x_min, x_max)
+    plt.ylim(y_min, y_max)
     plt.legend()
     plt.grid(True)
-    plt.savefig(os.path.join(output_dir, f"interpolacao_lagrangeana_{caso_nome}.png"))
+    plt.savefig(os.path.join(caso_nome, f"interpolacao_lagrangeana_{caso_nome}.png"))
     plt.close()
 
     # Gráfico da interpolação por Splines Cúbicos
@@ -69,6 +76,8 @@ def gerar_interpolacoes(dados, x_value, caso_nome):
     plt.xlabel("x (km)")
     plt.ylabel("y (km)")
     plt.title(f"Interpolação por Splines Cúbicos - {caso_nome}")
+    plt.xlim(x_min, x_max)
+    plt.ylim(y_min, y_max)
     plt.legend()
     plt.grid(True)
     plt.savefig(os.path.join(caso_nome, f"splines_cubicos_{caso_nome}.png"), dpi = 300)
@@ -85,6 +94,8 @@ def gerar_interpolacoes(dados, x_value, caso_nome):
     plt.xlabel("x (km)")
     plt.ylabel("y (km)")
     plt.title(f"Interpolação Lagrangeana vs Splines Cúbicos - {caso_nome}")
+    plt.xlim(x_min, x_max)
+    plt.ylim(y_min, y_max)
     plt.legend()
     plt.grid(True)
     plt.savefig(os.path.join(caso_nome, f"comparacao_interpolacoes_{caso_nome}.png"), dpi = 300)
@@ -115,6 +126,8 @@ def gerar_interpolacoes(dados, x_value, caso_nome):
     plt.xlabel("x (km)")
     plt.ylabel("y (km)")
     plt.title(f"Validação da Interpolação - {caso_nome}")
+    plt.xlim(x_min, x_max)
+    plt.ylim(y_min, y_max)
     plt.legend()
     plt.grid(True)
     plt.savefig(os.path.join(caso_nome, f"validacao_interpolacao_{caso_nome}.png"), dpi = 300)
